@@ -72,7 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -250,6 +253,127 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-31"><a href="#cb5-31"></a>                        <span class="at">scale        =</span> scale)</span>
 <span id="cb5-32"><a href="#cb5-32"></a></span>
 <span id="cb5-33"><a href="#cb5-33"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="Reporting_Tools_cache/html/unnamed-chunk-2_9376ab98bfecc64d858f714741e63c9e">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># 1.0 TOTAL SALES BY MONTH ----</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># 1.1 Preparing Time Series Data ----</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># Monthly</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>total_sales_m_tbl <span class="ot">&lt;-</span> bike_orderlines_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">select</span>(order_date, total_price) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">mutate</span>(<span class="at">date_rounded =</span> <span class="fu">floor_date</span>(order_date, <span class="at">unit =</span> <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">group_by</span>(date_rounded) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">mutate</span>(<span class="at">label_text =</span> <span class="fu">str_glue</span>(<span class="st">"Sales: {format_to_euro(total_sales)}</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="st">                                 Date: {date_rounded %&gt;% format('%B %Y')}"</span>))</span>
+<span id="cb6-18"><a href="#cb6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19"></a>total_sales_m_tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["date_rounded"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["total_sales"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["label_text"],"name":[3],"type":["glue"],"align":["right"]}],"data":[{"1":"2015-01-01","2":"392212","3":"Sales: 392.212 €\\nDate: January 2015"},{"1":"2015-02-01","2":"979099","3":"Sales: 979.099 €\\nDate: February 2015"},{"1":"2015-03-01","2":"548976","3":"Sales: 548.976 €\\nDate: March 2015"},{"1":"2015-04-01","2":"1675598","3":"Sales: 1.675.598 €\\nDate: April 2015"},{"1":"2015-05-01","2":"868838","3":"Sales: 868.838 €\\nDate: May 2015"},{"1":"2015-06-01","2":"1236049","3":"Sales: 1.236.049 €\\nDate: June 2015"},{"1":"2015-07-01","2":"996060","3":"Sales: 996.060 €\\nDate: July 2015"},{"1":"2015-08-01","2":"561418","3":"Sales: 561.418 €\\nDate: August 2015"},{"1":"2015-09-01","2":"691921","3":"Sales: 691.921 €\\nDate: September 2015"},{"1":"2015-10-01","2":"659463","3":"Sales: 659.463 €\\nDate: October 2015"},{"1":"2015-11-01","2":"850430","3":"Sales: 850.430 €\\nDate: November 2015"},{"1":"2015-12-01","2":"470218","3":"Sales: 470.218 €\\nDate: December 2015"},{"1":"2016-01-01","2":"606551","3":"Sales: 606.551 €\\nDate: January 2016"},{"1":"2016-02-01","2":"592871","3":"Sales: 592.871 €\\nDate: February 2016"},{"1":"2016-03-01","2":"1232284","3":"Sales: 1.232.284 €\\nDate: March 2016"},{"1":"2016-04-01","2":"1404410","3":"Sales: 1.404.410 €\\nDate: April 2016"},{"1":"2016-05-01","2":"844861","3":"Sales: 844.861 €\\nDate: May 2016"},{"1":"2016-06-01","2":"924120","3":"Sales: 924.120 €\\nDate: June 2016"},{"1":"2016-07-01","2":"1466591","3":"Sales: 1.466.591 €\\nDate: July 2016"},{"1":"2016-08-01","2":"1138118","3":"Sales: 1.138.118 €\\nDate: August 2016"},{"1":"2016-09-01","2":"911200","3":"Sales: 911.200 €\\nDate: September 2016"},{"1":"2016-10-01","2":"508625","3":"Sales: 508.625 €\\nDate: October 2016"},{"1":"2016-11-01","2":"570180","3":"Sales: 570.180 €\\nDate: November 2016"},{"1":"2016-12-01","2":"530696","3":"Sales: 530.696 €\\nDate: December 2016"},{"1":"2017-01-01","2":"838073","3":"Sales: 838.073 €\\nDate: January 2017"},{"1":"2017-02-01","2":"917521","3":"Sales: 917.521 €\\nDate: February 2017"},{"1":"2017-03-01","2":"1697590","3":"Sales: 1.697.590 €\\nDate: March 2017"},{"1":"2017-04-01","2":"1012416","3":"Sales: 1.012.416 €\\nDate: April 2017"},{"1":"2017-05-01","2":"1848190","3":"Sales: 1.848.190 €\\nDate: May 2017"},{"1":"2017-06-01","2":"1617491","3":"Sales: 1.617.491 €\\nDate: June 2017"},{"1":"2017-07-01","2":"1706460","3":"Sales: 1.706.460 €\\nDate: July 2017"},{"1":"2017-08-01","2":"1363394","3":"Sales: 1.363.394 €\\nDate: August 2017"},{"1":"2017-09-01","2":"1007288","3":"Sales: 1.007.288 €\\nDate: September 2017"},{"1":"2017-10-01","2":"977063","3":"Sales: 977.063 €\\nDate: October 2017"},{"1":"2017-11-01","2":"696876","3":"Sales: 696.876 €\\nDate: November 2017"},{"1":"2017-12-01","2":"827929","3":"Sales: 827.929 €\\nDate: December 2017"},{"1":"2018-01-01","2":"875882","3":"Sales: 875.882 €\\nDate: January 2018"},{"1":"2018-02-01","2":"735354","3":"Sales: 735.354 €\\nDate: February 2018"},{"1":"2018-03-01","2":"904664","3":"Sales: 904.664 €\\nDate: March 2018"},{"1":"2018-04-01","2":"1146944","3":"Sales: 1.146.944 €\\nDate: April 2018"},{"1":"2018-05-01","2":"1499608","3":"Sales: 1.499.608 €\\nDate: May 2018"},{"1":"2018-06-01","2":"1346596","3":"Sales: 1.346.596 €\\nDate: June 2018"},{"1":"2018-07-01","2":"1575577","3":"Sales: 1.575.577 €\\nDate: July 2018"},{"1":"2018-08-01","2":"928248","3":"Sales: 928.248 €\\nDate: August 2018"},{"1":"2018-09-01","2":"1760560","3":"Sales: 1.760.560 €\\nDate: September 2018"},{"1":"2018-10-01","2":"762835","3":"Sales: 762.835 €\\nDate: October 2018"},{"1":"2018-11-01","2":"489677","3":"Sales: 489.677 €\\nDate: November 2018"},{"1":"2018-12-01","2":"215908","3":"Sales: 215.908 €\\nDate: December 2018"},{"1":"2019-01-01","2":"856411","3":"Sales: 856.411 €\\nDate: January 2019"},{"1":"2019-02-01","2":"1196018","3":"Sales: 1.196.018 €\\nDate: February 2019"},{"1":"2019-03-01","2":"1740798","3":"Sales: 1.740.798 €\\nDate: March 2019"},{"1":"2019-04-01","2":"2104008","3":"Sales: 2.104.008 €\\nDate: April 2019"},{"1":"2019-05-01","2":"1901821","3":"Sales: 1.901.821 €\\nDate: May 2019"},{"1":"2019-06-01","2":"1863254","3":"Sales: 1.863.254 €\\nDate: June 2019"},{"1":"2019-07-01","2":"958970","3":"Sales: 958.970 €\\nDate: July 2019"},{"1":"2019-08-01","2":"944077","3":"Sales: 944.077 €\\nDate: August 2019"},{"1":"2019-09-01","2":"745733","3":"Sales: 745.733 €\\nDate: September 2019"},{"1":"2019-10-01","2":"873347","3":"Sales: 873.347 €\\nDate: October 2019"},{"1":"2019-11-01","2":"1100834","3":"Sales: 1.100.834 €\\nDate: November 2019"},{"1":"2019-12-01","2":"732604","3":"Sales: 732.604 €\\nDate: December 2019"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="Reporting_Tools_cache/html/unnamed-chunk-3_bc48af8dd3e24392721f459be3d58bec">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>?format </span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># Scroll down to Details and go to to date-times (click format.POSIXct)</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># All Abbreviations are listed here as well</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="st">"2011-01-01 00:00:00"</span> <span class="sc">%&gt;%</span> <span class="fu">as_datetime</span>() <span class="sc">%&gt;%</span> <span class="fu">format</span>(<span class="st">"%B %Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "January 2011"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="do">## [1] "January 2011"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="Reporting_Tools_cache/html/unnamed-chunk-4_31b3db2cc103b5b972507cca3e69edcd">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># 1.2 Interactive Plot ----</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># Step 1: Create ggplot with text feature</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a>g1 <span class="ot">&lt;-</span> total_sales_m_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_rounded, <span class="at">y =</span> total_sales)) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="co"># Geoms</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a>  <span class="co"># Formatting</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>  </span>
+<span id="cb10-14"><a href="#cb10-14"></a>  <span class="co"># Convert scale to euro format</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">euro_format</span>()) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>  </span>
+<span id="cb10-17"><a href="#cb10-17"></a>  <span class="co"># Make sure 0 will always be shown (even if the data is far away)</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a>  </span>
+<span id="cb10-20"><a href="#cb10-20"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-21"><a href="#cb10-21"></a>    <span class="at">title =</span> <span class="st">"Total Sales"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="at">y =</span> <span class="st">"Revenue (EUR)"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23"></a>    <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a>  )</span>
+<span id="cb10-25"><a href="#cb10-25"></a></span>
+<span id="cb10-26"><a href="#cb10-26"></a>g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="Reporting_Tools_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="Reporting_Tools_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="Reporting_Tools_cache/html/unnamed-chunk-5_6d21391fa7063aaec1e7dac7320a4c93">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># 1.3 Plot Total Sales Function ----</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>plot_total_sales <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">unit =</span> <span class="st">"month"</span>, <span class="at">date_format =</span> <span class="st">"%B %Y"</span>, <span class="at">interactive =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="co"># Handle Data</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>  data_tbl <span class="ot">&lt;-</span> bike_orderlines_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a>    <span class="fu">select</span>(order_date, total_price) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a>    <span class="fu">mutate</span>(<span class="at">date_rounded =</span> <span class="fu">floor_date</span>(order_date, <span class="at">unit =</span> unit)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="fu">group_by</span>(date_rounded) <span class="sc">%&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a>    <span class="fu">mutate</span>(<span class="at">label_text =</span> <span class="fu">str_glue</span>(<span class="st">"Sales: {format_to_euro(total_sales)}</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="st">                                 Date: {date_rounded %&gt;% format(date_format)}"</span>))</span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co"># Make Plot</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a>  g1 <span class="ot">&lt;-</span> data_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date_rounded, <span class="at">y =</span> total_sales)) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a></span>
+<span id="cb12-22"><a href="#cb12-22"></a>    <span class="co"># Geoms</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">text =</span> label_text), <span class="at">color =</span> <span class="st">"#2C3E50"</span>) <span class="sc">+</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a></span>
+<span id="cb12-26"><a href="#cb12-26"></a>    <span class="co"># Formatting</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">euro_format</span>()) <span class="sc">+</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a>    <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-29"><a href="#cb12-29"></a>    <span class="fu">labs</span>(</span>
+<span id="cb12-30"><a href="#cb12-30"></a>      <span class="at">title =</span> <span class="st">"Total Sales"</span>,</span>
+<span id="cb12-31"><a href="#cb12-31"></a>      <span class="at">y =</span> <span class="st">"Revenue (Euro)"</span>,</span>
+<span id="cb12-32"><a href="#cb12-32"></a>      <span class="at">x =</span> <span class="st">""</span></span>
+<span id="cb12-33"><a href="#cb12-33"></a>    )</span>
+<span id="cb12-34"><a href="#cb12-34"></a></span>
+<span id="cb12-35"><a href="#cb12-35"></a>  <span class="co"># Static vs Interactive Logic</span></span>
+<span id="cb12-36"><a href="#cb12-36"></a>  <span class="cf">if</span> (interactive) {</span>
+<span id="cb12-37"><a href="#cb12-37"></a>    <span class="fu">return</span>(<span class="fu">ggplotly</span>(g1, <span class="at">tooltip =</span> <span class="st">"text"</span>))</span>
+<span id="cb12-38"><a href="#cb12-38"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-39"><a href="#cb12-39"></a>    <span class="fu">return</span>(g1)</span>
+<span id="cb12-40"><a href="#cb12-40"></a>  }</span>
+<span id="cb12-41"><a href="#cb12-41"></a></span>
+<span id="cb12-42"><a href="#cb12-42"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -603,7 +727,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
+<script>var lightboxQuarto = GLightbox({"loop":true,"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});</script>
 
 
 </body></html>
