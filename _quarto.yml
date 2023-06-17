@@ -15,13 +15,13 @@ website:
       - text: "Journal"
         menu: 
           - text: "01 Reporting Tools"
-            file: /Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/Reporting_Tools.qmd
+            file: content/01_journal/Reporting_Tools.qmd
           - text: "02 Serving Your App"
-            file: /Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/Serving_Your_App.qmd
+            file: content/01_journal/Serving_Your_App.qmd
           - text: "03 Stock Analyzer"
-            file: /Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/Stock_Analyzer.qmd
+            file: content/01_journal/Stock_Analyzer.qmd
           - text: "04 DDDM For Business"
-            file: /Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/DDDM_For_Business.qmd
+            file: content/01_journal/DDDM_For_Business.qmd
       - text: "Class notes"
         file: content/02_notes/05_class_notes.qmd
       - text: "Links"
