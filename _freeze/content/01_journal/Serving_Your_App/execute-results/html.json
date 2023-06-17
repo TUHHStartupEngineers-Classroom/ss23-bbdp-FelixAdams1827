@@ -1,0 +1,18 @@
+{
+  "hash": "260c85c40cfb2513c1f731b7dc64a5e6",
+  "result": {
+    "markdown": "---\ntitle: \"Serving your App\"\nauthor: \"Felix Adamaszek\"\n---\n\n\n::: callout-note\ncallout-note\n:::\n\nThis is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \\# in front of your text, it will create a top level-header.\n\nTo learn more about Quarto websites visit <https://quarto.org/docs/websites>.\n\n# Text Formatting\n\n*italics* and **bold**\n\nsuperscript^2^ / subscript~2~\n\n~~strikethrough~~\n\n`verbatim code`\n\n> Blockquote\n\n# Headings\n\n## Header 2\n### Header 3\n#### Header 4\n##### Header 5\n###### Header 6\n\n# Links & Images\n\n<https://quarto.org>\n\n[Quarto](https://quarto.org)\n\n![Caption](../../assets/img/elephant.png)\n\n[![Caption](../../assets/img/elephant.png)](https://quarto.org)\n\n[![Caption](../../assets/img/elephant.png)](https://quarto.org \"An elephant\")\n\n\n# Lists\n\n* unordered list\n    + sub-item 1\n    + sub-item 2\n        - sub-sub-item 1\n        \n*   item 2\n\n    Continued (indent 4 spaces)\n    \n    \n1. ordered list\n2. item 2\n    i) sub-item 1\n         A.  sub-sub-item 1\n         \n\n\n\n::: {.cell hash='Serving_Your_App_cache/html/unnamed-chunk-1_a9b0a83ab071e72da35bf7f0954bf79d'}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n#> [1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"../../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

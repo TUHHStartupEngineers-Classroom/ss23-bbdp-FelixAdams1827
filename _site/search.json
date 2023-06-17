@@ -37,9 +37,9 @@
   {
     "objectID": "content/01_journal/02_data_acquisition.html",
     "href": "content/01_journal/02_data_acquisition.html",
-    "title": "Data Acquisition",
+    "title": "Serving your App",
     "section": "",
-    "text": "Note\n\n\n\nYou can delete everything in here and start fresh."
+    "text": "Note\n\n\n\ncallout-note\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   },
   {
     "objectID": "content/02_notes/05_class_notes.html",
@@ -75,5 +75,68 @@
     "title": "Links",
     "section": "",
     "text": "Google is great, Google your problem\nStackoverflow is great, google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways."
+  },
+  {
+    "objectID": "content/01_journal/Reporting_Tools.html",
+    "href": "content/01_journal/Reporting_Tools.html",
+    "title": "Reporting Tools",
+    "section": "",
+    "text": "Note\n\n\n\ncallout-note\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "content/01_journal/Reporting_Tools.html#header-2",
+    "href": "content/01_journal/Reporting_Tools.html#header-2",
+    "title": "Reporting Tools",
+    "section": "\n2.1 Header 2",
+    "text": "2.1 Header 2\nHeader 3\nHeader 4\nHeader 5\nHeader 6"
+  },
+  {
+    "objectID": "content/01_journal/02_data_acquisition.html#header-2",
+    "href": "content/01_journal/02_data_acquisition.html#header-2",
+    "title": "Serving your App",
+    "section": "\n2.1 Header 2",
+    "text": "2.1 Header 2\nHeader 3\nHeader 4\nHeader 5\nHeader 6"
+  },
+  {
+    "objectID": "content/01_journal/Serving_Your_App.html",
+    "href": "content/01_journal/Serving_Your_App.html",
+    "title": "Serving your App",
+    "section": "",
+    "text": "Note\n\n\n\ncallout-note\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "content/01_journal/Serving_Your_App.html#header-2",
+    "href": "content/01_journal/Serving_Your_App.html#header-2",
+    "title": "Serving your App",
+    "section": "\n2.1 Header 2",
+    "text": "2.1 Header 2\nHeader 3\nHeader 4\nHeader 5\nHeader 6"
+  },
+  {
+    "objectID": "content/01_journal/Stock_Analyzer.html",
+    "href": "content/01_journal/Stock_Analyzer.html",
+    "title": "Stock Analyzer",
+    "section": "",
+    "text": "Note\n\n\n\ncallout-note\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "content/01_journal/Stock_Analyzer.html#header-2",
+    "href": "content/01_journal/Stock_Analyzer.html#header-2",
+    "title": "Stock Analyzer",
+    "section": "\n2.1 Header 2",
+    "text": "2.1 Header 2\nHeader 3\nHeader 4\nHeader 5\nHeader 6"
+  },
+  {
+    "objectID": "content/01_journal/DDDM_For_Business.html",
+    "href": "content/01_journal/DDDM_For_Business.html",
+    "title": "Data-Driven Decision Making for Business",
+    "section": "",
+    "text": "Note\n\n\n\ncallout-note\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "content/01_journal/DDDM_For_Business.html#header-2",
+    "href": "content/01_journal/DDDM_For_Business.html#header-2",
+    "title": "Data-Driven Decision Making for Business",
+    "section": "\n2.1 Header 2",
+    "text": "2.1 Header 2\nHeader 3\nHeader 4\nHeader 5\nHeader 6"
   }
 ]
