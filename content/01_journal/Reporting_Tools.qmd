@@ -4,29 +4,29 @@ author: "Felix Adamaszek"
 ---
 
 ```{r}
-# INTERACTIVE PLOTS ----
-
-# GOAL: DEVELOP INTERACTIVE PLOTS FOR A SALES REPORT
-
-# LIBRARIES & DATA ----
-
-# Main
+library(flexdashboard)
+library(shiny)
+library(DT)
 library(tidyverse)
 library(lubridate)
-
-# Visualization
 library(plotly)
+library(raster)
+library(sf)
+library(ggplotlyExtra)
+library(ggplot2)
 
-bikes_tbl      <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/bike data/bikes_tbl.rds")
-bikeshops_tbl  <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/bike data/bikeshops_tbl.rds")
-orderlines_tbl <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/01_journal/bike data/orderlines_tbl.rds")
+# Bike data
+bikes_tbl      <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/bikes_tbl.rds")
+bikeshops_tbl  <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/bikeshops_tbl.rds")
+orderlines_tbl <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/orderlines_tbl.rds")
 
 bike_orderlines_tbl <- orderlines_tbl %>%
     left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
     left_join(bikeshops_tbl, by = c("customer_id" = "bikeshop_id")) %>%
-    
-    # Add the total price
     mutate(total_price = price_euro * quantity)
+bikes_tbl
+bikeshops_tbl
+bike_orderlines_tbl
 
 format_to_euro <- function(x, suffix = " €") {
 
@@ -50,123 +50,11 @@ euro_format <- function(scale        = 1,
                         scale        = scale)
 
 }
-    
-    
-
-```
-
-```{r}
-# 1.0 TOTAL SALES BY MONTH ----
-
-# 1.1 Preparing Time Series Data ----
-# Monthly
-
-total_sales_m_tbl <- bike_orderlines_tbl %>%
-
-  select(order_date, total_price) %>%
-
-  mutate(date_rounded = floor_date(order_date, unit = "month")) %>%
-
-  group_by(date_rounded) %>%
-  summarise(total_sales = sum(total_price)) %>%
-  ungroup() %>%
-
-  mutate(label_text = str_glue("Sales: {format_to_euro(total_sales)}
-                                 Date: {date_rounded %>% format('%B %Y')}"))
-
-total_sales_m_tbl
-
-```
-
-```{r}
-?format 
-# Scroll down to Details and go to to date-times (click format.POSIXct)
-# All Abbreviations are listed here as well
-
-"2011-01-01 00:00:00" %>% as_datetime() %>% format("%B %Y")
-## [1] "January 2011"
-
-```
-
-
-```{r}
-# 1.2 Interactive Plot ----
-
-# Step 1: Create ggplot with text feature
-
-g1 <- total_sales_m_tbl %>%
-  ggplot(aes(x = date_rounded, y = total_sales)) +
-
-  # Geoms
-  geom_point() +
-  geom_smooth(method = "loess", span = 0.2) +
-
-  # Formatting
-  
-  # Convert scale to euro format
-  scale_y_continuous(labels = euro_format()) +
-  
-  # Make sure 0 will always be shown (even if the data is far away)
-  expand_limits(y = 0) +
-  
-  labs(
-    title = "Total Sales",
-    y = "Revenue (EUR)",
-    x = ""
-  )
-
-g1
-
-```
-
-```{r}
-# 1.3 Plot Total Sales Function ----
-
-plot_total_sales <- function(unit = "month", date_format = "%B %Y", interactive = TRUE) {
-
-  # Handle Data
-  data_tbl <- bike_orderlines_tbl %>%
-
-    select(order_date, total_price) %>%
-
-    mutate(date_rounded = floor_date(order_date, unit = unit)) %>%
-
-    group_by(date_rounded) %>%
-    summarise(total_sales = sum(total_price)) %>%
-    ungroup() %>%
-
-    mutate(label_text = str_glue("Sales: {format_to_euro(total_sales)}
-                                 Date: {date_rounded %>% format(date_format)}"))
-# Make Plot
-  g1 <- data_tbl %>%
-    ggplot(aes(x = date_rounded, y = total_sales)) +
-
-    # Geoms
-    geom_point(aes(text = label_text), color = "#2C3E50") +
-    geom_smooth(method = "loess", span = 0.2) +
-
-    # Formatting
-    scale_y_continuous(labels = euro_format()) +
-    expand_limits(y = 0) +
-    labs(
-      title = "Total Sales",
-      y = "Revenue (Euro)",
-      x = ""
-    )
-
-  # Static vs Interactive Logic
-  if (interactive) {
-    return(ggplotly(g1, tooltip = "text"))
-  } else {
-    return(g1)
-  }
-
-}
 
 
 
-
-plot_total_sales(unit = "month", date_format = "%B %Y", interactive = TRUE)
 
   
+
+
 ```

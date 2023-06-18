@@ -1,0 +1,13 @@
+name: Stock_Analyzer
+title: Stock_Analyzer
+username:
+account: felixadams1827
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9324846
+bundleId: 7356981
+url: https://felixadams1827.shinyapps.io/Stock_Analyzer/
+when: 1687012717.56739
+lastSyncTime: 1687012717.56741
+asMultiple: FALSE
+asStatic: FALSE
