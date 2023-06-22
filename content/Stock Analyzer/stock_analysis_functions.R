@@ -13,7 +13,7 @@ function(stock_index = "DAX") {
   # Control for different currencies and different column namings in wiki
   vars <- switch(index_lower,
                  dax    = list(wiki     = "DAX", 
-                               columns  = c("Ticker", "Company")),
+                               columns  = c("Ticker", "Company")),  # changed here "Ticker symbol" to "Ticker"
                  sp500  = list(wiki     = "List_of_S%26P_500_companies", 
                                columns  = c("Symbol", "Security")),
                  dow    = list(wiki     = "Dow_Jones_Industrial_Average",
@@ -142,7 +142,7 @@ function(stock_index = "DAX") {
   # Control for different currencies and different column namings in wiki
   vars <- switch(index_lower,
                  dax    = list(wiki     = "DAX", 
-                               columns  = c("Ticker", "Company")),
+                               columns  = c("Ticker", "Company")),  # changed here "Ticker symbol" to "Ticker"
                  sp500  = list(wiki     = "List_of_S%26P_500_companies", 
                                columns  = c("Symbol", "Security")),
                  dow    = list(wiki     = "Dow_Jones_Industrial_Average",
@@ -271,7 +271,7 @@ function(stock_index = "DAX") {
   # Control for different currencies and different column namings in wiki
   vars <- switch(index_lower,
                  dax    = list(wiki     = "DAX", 
-                               columns  = c("Ticker", "Company")),
+                               columns  = c("Ticker", "Company")),  # changed here "Ticker symbol" to "Ticker"
                  sp500  = list(wiki     = "List_of_S%26P_500_companies", 
                                columns  = c("Symbol", "Security")),
                  dow    = list(wiki     = "Dow_Jones_Industrial_Average",

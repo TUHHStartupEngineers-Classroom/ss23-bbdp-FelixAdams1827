@@ -1,21 +1,20 @@
 # Business Analytics with Data Science and Machine Learning ----
 # Building Business Data Products ----
-# STOCK ANALYZER APP - DATA ANALYSIS -----
+# STOCK ANALYZER APP - LAYOUT -----
 
 # APPLICATION DESCRIPTION ----
-# - The user will select 1 stock from the SP 500 stock index
-# - The functionality is designed to pull the past 180 days of stock data by default
-# - We will implement 2 moving averages - short (fast) and long (slow)
-# - We will produce a timeseries visualization
-# - We will produce automated commentary based on the moving averages
+# - Create a basic layout in shiny showing the stock dropdown, interactive plot and commentary
+
 
 # LIBRARIES ----
-library(tidyverse)
-library(fs)
-library(glue)
-library(rvest)
-library(quantmod)
+library(shiny)
+library(shinyWidgets)
 library(plotly)
+library(tidyverse)
+library(rvest)
+library(glue)
+library(fs)
+library(quantmod)
 
 # 1.0 GET STOCK LIST ----
 get_stock_list <- function(stock_index = "DAX") {
@@ -32,7 +31,7 @@ get_stock_list <- function(stock_index = "DAX") {
   # Control for different currencies and different column namings in wiki
   vars <- switch(index_lower,
                  dax    = list(wiki     = "DAX", 
-                               columns  = c("Ticker", "Company")),
+                               columns  = c("Ticker", "Company")),  # changed here "Ticker symbol" to "Ticker"
                  sp500  = list(wiki     = "List_of_S%26P_500_companies", 
                                columns  = c("Symbol", "Security")),
                  dow    = list(wiki     = "Dow_Jones_Industrial_Average",
@@ -72,8 +71,9 @@ stock_list_tbl <- get_stock_list("nasdaq")
 stock_list_tbl <- get_stock_list()
 stock_list_tbl
 
-# 2.0 EXTRACT SYMBOL BASED ON USER INPUT ----
 
+
+# 2.0 EXTRACT SYMBOL BASED ON USER INPUT ----
 user_input <- "AAPL, Apple Inc."
 test <- user_input %>% stringr::str_split(pattern=", ") %>% purrr::pluck(1, 1)
 test
@@ -86,7 +86,9 @@ get_symbol_from_user_input <- function(user_input){
 "ADS.DE, Adidas" %>% get_symbol_from_user_input()
 "AAPL, Apple Inc." %>% get_symbol_from_user_input()
 
+
 # 3.0 GET STOCK DATA ----
+
 # Retrieve market data
 get_stock_data <- function(stock_symbol, 
                            from = today() - days(180), 
@@ -124,10 +126,7 @@ get_stock_data <- function(stock_symbol,
 }
 stock_data_tbl <- get_stock_data("AAPL", from = "2020-06-01", to = "2021-01-12", mavg_short = 5, mavg_long = 8)
 
-
-
 # 4.0 PLOT STOCK DATA ----
-
 currency_format <- function(currency) {
   if (currency == "USD") 
   { x <- scales::dollar_format(largest_with_cents = 10) }
@@ -160,7 +159,6 @@ plot_stock_data <- function(stock_data){
   plot_stock_data()
 
 # 5.0 GENERATE COMMENTARY ----
-
 generate_commentary <- function(data, user_input) {
   warning_signal <- data %>%
     tail(1) %>% # Get last value
@@ -180,19 +178,131 @@ generate_commentary <- function(data, user_input) {
 generate_commentary(stock_data_tbl, user_input = user_input)
 
 
-# 6.0 TEST WORKFLOW ----
 
-# "ADS.DE, Adidas" %>% 
-#  get_symbol_from_user_input() %>%
-#  get_stock_data(from = from, to = to) %>%
-#  plot_stock_data() #%>%
-#  generate_commentary(user_input = "ADS.DE, Adidas")
+# UI ----
+ui <- fluidPage(title = "Stock Analyzer",
+                
+                # 1.0 HEADER ----
+                div(
+                  h1("Stock Analyzer"),
+                ),
+                # 2.0 APPLICATION UI -----
+                div(
+                  column(
+                    width = 4,
+                    wellPanel(
+                      
+                      pickerInput(inputId = "index_selection",
+                                  label = "Stock Index", 
+                                  choices = c("DAX", "SP500", "DOW", "NASDAQ"),
+                                  select = "DAX"
+                      ),
+                      uiOutput("indices"),            
+                      pickerInput(inputId = "stock_selection",
+                                  label="Stocks",
+                                  choices = stock_list_tbl$label,
+                                  options = list(
+                                    multiple=F,
+                                    actionsBox = FALSE,
+                                    liveSearch = TRUE,
+                                    size = 10
+                                  )
+                      ),
+                      dateRangeInput(inputId = "date_range", 
+                                     label   = h4("Date Range"), 
+                                     start   = today() - 180, 
+                                     end     = today(),        
+                                     #min     = today() - 300, 
+                                     #max     = today(), 
+                                     startview = "year"),
+                      
+                      actionButton(inputId = "analyze",
+                                   label="Analyze",
+                                   icon = icon("download")),
+                      hr(),
+                      
+                      sliderInput(inputId = "mavg_short", 
+                                  label   = "Short Moving Average", 
+                                  min     = 5,
+                                  max     = 40, 
+                                  value   = c(20), 
+                                  step    = 1, 
+                                  round   = TRUE),
+                      
+                      sliderInput(inputId = "mavg_long", 
+                                  label   = "Long Moving Average", 
+                                  min     = 50,
+                                  max     = 120, 
+                                  value   = c(50), 
+                                  step    = 1, 
+                                  round   = TRUE)
+                    )
+                  ), 
+                  column(
+                    width = 8,
+                    div(h4(textOutput(outputId = "plot_header"))),
+                    div(plotlyOutput(outputId = "plotly_plot"))
+                  )
+                ),
+                
+                
+                # 3.0 ANALYST COMMENTARY ----
+                div(
+                  column(
+                    width = 12,
+                    div(h3("Analyst Commentary")),
+                    div(textOutput(outputId = "commentary"))
+                  )
+                )
+)
 
-# 7.0 SAVE SCRIPTS ----
+# SERVER ----
+server <- function(input, output, session) {
+  # Stock Symbol ----
+  
+  stock_list_tbl <- reactive({
+    get_stock_list(input$index_selection)
+    
+  })
+  
+  output$indices <- renderUI({
+    pickerInput(inputId = "stock_selection",
+                label="Stocks",
+                choices = stock_list_tbl() %>% purrr::pluck("label"),
+                select = stock_list_tbl() %>% purrr::pluck("label") %>% purrr::pluck(1),
+                options = list(
+                  multiple=F,
+                  actionsBox = FALSE,
+                  liveSearch = TRUE,
+                  size = 10
+                )
+    )
+  })
+  
+  stock_symbol <- eventReactive(ignoreNULL = FALSE, input$analyze, {
+    input$stock_selection
+  })
+  
+  stock_data_tbl <- reactive({
+    
+    stock_symbol() %>%
+      get_symbol_from_user_input %>%
+      get_stock_data(from = input$date_range[1],
+                     to   = input$date_range[2],
+                     mavg_short = input$mavg_short,
+                     mavg_long  = input$mavg_long)
+    
+  })
+  
+  output$plot_header <- renderText({stock_symbol()})
+  
+  output$stock_data <- renderPrint({stock_data_tbl()})
+  
+  output$plotly_plot <- renderPlotly({plot_stock_data(stock_data_tbl())})
+  
+  output$commentary <- renderPrint({generate_commentary(stock_data_tbl(), user_input = stock_symbol())})
+}
 
-# write functions to an R file
-dump(
-  list = c("get_stock_list", "get_symbol_from_user_input", "get_stock_data", "plot_stock_data", "currency_format", "generate_commentary"),
-  file = "stock_analysis_functions.R", 
-  append = TRUE) # Override existing 
+# RUN APP ----
 
+shinyApp(ui = ui, server = server)

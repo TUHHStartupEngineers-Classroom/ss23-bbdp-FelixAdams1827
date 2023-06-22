@@ -4,10 +4,10 @@ username:
 account: felixadams1827
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 9324846
-bundleId: 7356981
+appId: 9347700
+bundleId: 7375955
 url: https://felixadams1827.shinyapps.io/Stock_Analyzer/
-when: 1687012717.56739
-lastSyncTime: 1687012717.56741
+when: 1687444006.27448
+lastSyncTime: 1687444006.2745
 asMultiple: FALSE
 asStatic: FALSE
