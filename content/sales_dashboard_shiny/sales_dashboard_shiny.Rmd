@@ -10,6 +10,10 @@ resource_files:
 - gadm36_DEU_1_sp.rds
 - bikes_tbl.rds
 - orderlines_tbl.rds
+- bikes_tbl.rds
+- orderlines_tbl.rds
+- bikeshops_tbl.rds
+- gadm36_DEU_1_sp.rds
 ---
 
 ```{r setup, include=FALSE}
@@ -52,9 +56,9 @@ euro_format <- function(scale        = 1,
 }
 
 # Bike data
-bikes_tbl      <- readRDS("/rsconnect/bikes_tbl.rds")
-bikeshops_tbl  <- readRDS("/rsconnect/bikeshops_tbl.rds")
-orderlines_tbl <- readRDS("/rsconnect/orderlines_tbl.rds")
+bikes_tbl      <- readRDS("bikes_tbl.rds")
+bikeshops_tbl  <- readRDS("bikeshops_tbl.rds")
+orderlines_tbl <- readRDS("orderlines_tbl.rds")
 
 bike_orderlines_tbl <- orderlines_tbl %>%
     left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
@@ -141,17 +145,10 @@ plot_ly(geo_plot_tbl,
 ```
 
 
-Column {data-width=500}
+Column {data-width=100}
 -----------------------
 
 ```{r}
-
-# Bike data
-bikes_tbl      <- readRDS("/rsconnect/bikes_tbl.rds")
-bikeshops_tbl  <- readRDS("/rsconnect/bikeshops_tbl.rds")
-orderlines_tbl <- readRDS("/rsconnect/orderlines_tbl.rds")
-
-
 bike_orderlines_tbl <- orderlines_tbl %>%
     left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
     left_join(bikeshops_tbl, by = c("customer_id" = "bikeshop_id")) %>%
