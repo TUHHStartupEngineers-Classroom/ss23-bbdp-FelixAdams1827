@@ -5,9 +5,9 @@ account: felixadams1827
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9324805
-bundleId: 7359368
+bundleId: 7379120
 url: https://felixadams1827.shinyapps.io/sales_dashboard_shiny/
-when: 1687101299.1408
-lastSyncTime: 1687101299.14081
+when: 1687511587.70257
+lastSyncTime: 1687511587.70259
 asMultiple: FALSE
 asStatic: FALSE
