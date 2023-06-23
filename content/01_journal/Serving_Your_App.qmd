@@ -1,0 +1,69 @@
+---
+title: "Serving your App"
+author: "Felix Adamaszek"
+---
+
+::: callout-note
+callout-note
+:::
+
+This is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+# Text Formatting
+
+*italics* and **bold**
+
+superscript^2^ / subscript~2~
+
+~~strikethrough~~
+
+`verbatim code`
+
+> Blockquote
+
+# Headings
+
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+
+# Links & Images
+
+<https://quarto.org>
+
+[Quarto](https://quarto.org)
+
+![Caption](../../assets/img/elephant.png)
+
+[![Caption](../../assets/img/elephant.png)](https://quarto.org)
+
+[![Caption](../../assets/img/elephant.png)](https://quarto.org "An elephant")
+
+
+# Lists
+
+* unordered list
+    + sub-item 1
+    + sub-item 2
+        - sub-sub-item 1
+        
+*   item 2
+
+    Continued (indent 4 spaces)
+    
+    
+1. ordered list
+2. item 2
+    i) sub-item 1
+         A.  sub-sub-item 1
+         
+
+
+```{r}
+1 + 1
+```
+

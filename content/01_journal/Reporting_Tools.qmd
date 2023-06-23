@@ -1,0 +1,60 @@
+---
+title: "Reporting Tools"
+author: "Felix Adamaszek"
+---
+
+```{r}
+library(flexdashboard)
+library(shiny)
+library(DT)
+library(tidyverse)
+library(lubridate)
+library(plotly)
+library(raster)
+library(sf)
+library(ggplotlyExtra)
+library(ggplot2)
+
+# Bike data
+bikes_tbl      <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/bikes_tbl.rds")
+bikeshops_tbl  <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/bikeshops_tbl.rds")
+orderlines_tbl <- readRDS("/Users/felixadamaszek/Documents/GitHub/ss23-bdml-FelixAdams1827/ss23-bbdp-FelixAdams1827/content/sales_dashboard_shiny/bike data/orderlines_tbl.rds")
+
+bike_orderlines_tbl <- orderlines_tbl %>%
+    left_join(bikes_tbl,     by = c("product_id" = "bike_id")) %>%
+    left_join(bikeshops_tbl, by = c("customer_id" = "bikeshop_id")) %>%
+    mutate(total_price = price_euro * quantity)
+bikes_tbl
+bikeshops_tbl
+bike_orderlines_tbl
+
+format_to_euro <- function(x, suffix = " €") {
+
+  scales::dollar(x,
+                 suffix       = suffix,
+                 prefix       = "",
+                 big.mark     = ".",
+                 decimal.mark = ",")
+}
+
+euro_format <- function(scale        = 1,
+                        prefix       = "",
+                        suffix       = " €",
+                        big.mark     = ".",
+                        decimal.mark = ",") {
+
+  scales::dollar_format(suffix       = suffix,
+                        prefix       = prefix,
+                        big.mark     = big.mark,
+                        decimal.mark = decimal.mark,
+                        scale        = scale)
+
+}
+
+
+
+
+  
+
+
+```
